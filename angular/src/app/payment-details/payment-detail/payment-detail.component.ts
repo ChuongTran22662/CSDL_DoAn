@@ -11,13 +11,11 @@ export class PaymentDetailComponent implements OnInit {
 
   constructor(private service: PaymentDetailService) { }
 
-  // tslint:disable-next-line:typedef
-  ngOnInit() {
+  ngOnInit(): void {
     this.resetForm();
   }
 
-  // tslint:disable-next-line:typedef
-  resetForm(form?: NgForm) {
+  resetForm(form?: NgForm): void {
     if (form != null) {
       form.form.reset();
     }
@@ -30,40 +28,35 @@ export class PaymentDetailComponent implements OnInit {
     };
   }
 
-  // tslint:disable-next-line:typedef
-  onSubmit(form: NgForm) {
-    if (this.service.formData.PMId === 0) {
-      this.insertRecord(form);
-    }
-    else {
-      this.updateRecord(form);
-    }
-  }
+  // onSubmit(form: NgForm): void {
+  //   if (this.service.formData.PMId === 0) {
+  //     this.insertRecord(form);
+  //   }
+  //   else {
+  //     this.updateRecord(form);
+  //   }
+  // }
 
-  // tslint:disable-next-line:typedef
-  insertRecord(form: NgForm) {
-    this.service.postPaymentDetail().subscribe(
+  get(): void {
+    this.service.getPaymentDetail().subscribe(
       res => {
         console.log(res);
-        this.resetForm(form);
         this.service.refreshList();
-      },
-      err => {
-        console.log(err);
       }
     );
   }
 
-  // tslint:disable-next-line:typedef
-  updateRecord(form: NgForm) {
-    this.service.putPaymentDetail().subscribe(
+  add(): void {
+    this.service.insertPaymentDetail().subscribe(
       res => {
-        this.resetForm(form);
         this.service.refreshList();
-      },
-      err => {
-        console.log(err);
       }
     );
+  }
+
+  deleteData(event){
+    this.service.deletePaymentDetail(event).subscribe(res => {
+
+    })
   }
 }
